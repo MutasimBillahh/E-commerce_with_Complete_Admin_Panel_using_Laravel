@@ -596,11 +596,11 @@
 			<div class="controls">
 				<fieldset>
 					<input type="checkbox" id="checkbox_4" name="special_offer" value="1">
-					<label for="checkbox_2">Special Offer</label>
+					<label for="checkbox_4">Special Offer</label>
 				</fieldset>
 				<fieldset>
 					<input type="checkbox" id="checkbox_5" name="special_deals" value="1">
-					<label for="checkbox_3">Special Deals</label>
+					<label for="checkbox_5">Special Deals</label>
 				</fieldset>
 			</div>
 		</div>
