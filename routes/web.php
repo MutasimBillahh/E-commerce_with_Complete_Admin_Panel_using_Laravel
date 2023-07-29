@@ -184,4 +184,16 @@ Route::get('/language/english', [LanguageController::class, 'English'])->name('e
 
 
 //FrontEnd Product Details Page//
-Route::get('product/details/{id}/{slug}', [IndexController::class, 'ProductDetails']);
+Route::get('/product/details/{id}/{slug}', [IndexController::class, 'ProductDetails']);
+
+
+//Frontend Product Tags Page//
+Route::get('/product/tag/{tag}', [IndexController::class, 'TagWiseProduct']);
+
+
+//FrontEnd Subcategory Wise Data //
+Route::get('/subcategory/product/{subcat_id}/{slug}', [IndexController::class, 'SubCatWiseProduct']);
+
+
+// Frontend Sub-SubCategory wise Data
+Route::get('/subsubcategory/product/{subsubcat_id}/{slug}', [IndexController::class, 'SubSubCatWiseProduct']);

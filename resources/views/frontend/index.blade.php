@@ -11,102 +11,11 @@ Express Shop
       <!-- ============================================== SIDEBAR ============================================== -->
       <div class="col-xs-12 col-sm-12 col-md-3 sidebar"> 
         
-        <!-- ================================== TOP NAVIGATION ================================== -->
+        <!-- ========= TOP NAVIGATION ============ -->
   
-       
-
-
-  <div class="side-menu animate-dropdown outer-bottom-xs">
-    <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Categories</div>
-    <nav class="yamm megamenu-horizontal">
-      <ul class="nav">
-
-
-         @foreach($categories as $category)
-
-              <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon {{$category->category_icon}}" aria-hidden="true"></i>
-
-@if(session()->get('language') == 'hindi') {{$category->category_name_hin}} @else {{$category->category_name_en}} @endif </a>
-
-                <ul class="dropdown-menu mega-menu">
-                  <li class="yamm-content">
-                    <div class="row">
-
-{{-- //Get SubCategory Data// --}}
-@php
-
-$subcategories = App\Models\SubCategory::where('category_id',$category->id)->orderBy('subcategory_name_en','ASC')->get();
-@endphp
-
-@foreach($subcategories as $subcategory)
-
-                      <div class="col-sm-12 col-md-3">
-
-
-
-  <h2 class="title">
-@if(session()->get('language') == 'hindi') {{$subcategory->subcategory_name_hin}} @else {{$subcategory->subcategory_name_en}} @endif
-
-</h2>
-               
-
-{{-- //Get SubSubCategory Data// --}}
-@php
-
-$subsubcategories = App\Models\SubSubCategory::where('subcategory_id',$subcategory->id)->orderBy('subsubcategory_name_en','ASC')->get();
-@endphp
-
-@foreach($subsubcategories as $subsubcategory)
-
-         <ul class="links list-unstyled">
-                          <li><a href="#">
-                            
- @if(session()->get('language') == 'hindi') {{$subsubcategory->subsubcategory_name_hin}} @else {{$subsubcategory->subsubcategory_name_en}} @endif           
-                          </a></li>
-                          
-                        </ul>
-
-           @endforeach {{-- End SubSubcategory Foreach --}}             
-                      </div>
-
-
-          
-                      <!-- /.col -->
-    @endforeach {{-- End Subcategory Foreach --}}
-                   
-                     
-                      <!-- /.col --> 
-                    </div>
-                    <!-- /.row --> 
-                  </li>
-                  <!-- /.yamm-content -->
-                </ul>
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-              
-             @endforeach {{-- //end category foreach --}}
-              
-              <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-paper-plane"></i>Kids and Babies</a> 
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-              
-              <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-futbol-o"></i>Sports</a> 
-                <!-- ================================== MEGAMENU VERTICAL ================================== --> 
-                <!-- /.dropdown-menu --> 
-                <!-- ================================== MEGAMENU VERTICAL ================================== --> </li>
-              <!-- /.menu-item -->
-              
-              <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-envira"></i>Home and Garden</a> 
-                <!-- /.dropdown-menu --> </li>
-              <!-- /.menu-item -->
-              
-            </ul>
-            <!-- /.nav --> 
-          </nav>
-          <!-- /.megamenu-horizontal --> 
-        </div>
-        <!-- /.side-menu --> 
-        <!-- ================================== TOP NAVIGATION : END ================================== --> 
+       @include('frontend.common.vertical_menu')
+ 
+        <!-- ====== TOP NAVIGATION : END ========= --> 
         
         <!-- ============================================== HOT DEALS ============================================== -->
         <div class="sidebar-widget hot-deals wow fadeInUp outer-bottom-xs">
@@ -349,37 +258,10 @@ $discount = ($amount/$product->selling_price) * 100;
         <!-- /.sidebar-widget --> 
         <!-- ============================================== NEWSLETTER: END ============================================== --> 
         
-        <!-- ============================================== Testimonials============================================== -->
-        <div class="sidebar-widget  wow fadeInUp outer-top-vs ">
-          <div id="advertisement" class="advertisement">
-            <div class="item">
-              <div class="avatar"><img src="{{asset('frontend/assets/images/testimonials/member1.png')}}" alt="Image"></div>
-              <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-              <div class="clients_author">John Doe <span>Abc Company</span> </div>
-              <!-- /.container-fluid --> 
-            </div>
-            <!-- /.item -->
-            
-            <div class="item">
-              <div class="avatar"><img src="{{asset('frontend/assets/images/testimonials/member3.png')}}" alt="Image"></div>
-              <div class="testimonials"><em>"</em>Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-              <div class="clients_author">Stephen Doe <span>Xperia Designs</span> </div>
-            </div>
-            <!-- /.item -->
-            
-            <div class="item">
-              <div class="avatar"><img src="{{asset('frontend/assets/images/testimonials/member2.png')}}" alt="Image"></div>
-              <div class="testimonials"><em>"</em> Vtae sodales aliq uam morbi non sem lacus port mollis. Nunc condime tum metus eud molest sed consectetuer.<em>"</em></div>
-              <div class="clients_author">Saraha Smith <span>Datsun &amp; Co</span> </div>
-              <!-- /.container-fluid --> 
-            </div>
-            <!-- /.item --> 
-            
-          </div>
-          <!-- /.owl-carousel --> 
-        </div>
+        <!-- ============= Testimonials============ -->
+         @include('frontend.common.testimonials')
         
-        <!-- ============================================== Testimonials: END ============================================== -->
+        <!-- ============ Testimonials: END ====== -->
         
         <div class="home-banner"> <img src="{{asset('frontend/assets/images/banners/LHS-banner.jpg')}}" alt="Image"> </div>
       </div>

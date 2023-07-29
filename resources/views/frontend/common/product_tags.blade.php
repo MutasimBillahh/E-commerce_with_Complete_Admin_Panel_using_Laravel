@@ -17,13 +17,14 @@ $tags_hin = App\Models\Product::groupBy('product_tags_hin')->select('product_tag
 
 
 @if(session()->get('language') == 'hindi') 
-@foreach($tags_en as $tag)
-<a class="item active" title="Phone" href="category.html">{{$tag->product_tags_en}}</a>
+@foreach($tags_hin as $tag)
+<a class="item active" title="Phone" href="{{ url('product/tag/'.$tag->product_tags_hin) }}">{{$tag->product_tags_hin}}</a>
 @endforeach
 
   @else 
-  @foreach($tags_hin as $tag)
-<a class="item active" title="Phone" href="category.html">{{$tag->product_tags_hin}}</a>
+
+  @foreach($tags_en as $tag)
+<a class="item active" title="Phone" href="{{ url('product/tag/'.$tag->product_tags_en) }}">{{$tag->product_tags_en}}</a>
 @endforeach
 
 @endif

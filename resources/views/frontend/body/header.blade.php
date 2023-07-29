@@ -205,10 +205,13 @@ $subcategories = App\Models\SubCategory::where('category_id',$category->id)->ord
 @foreach($subcategories as $subcategory)
               <div class="col-xs-12 col-sm-6 col-md-2 col-menu">
 
+
+<a href="{{ url('subcategory/product/'.$subcategory->id.'/'.$subcategory->subcategory_slug_en ) }}">
+
                 <h2 class="title">
 @if(session()->get('language') == 'hindi') {{$subcategory->subcategory_name_hin}} @else {{$subcategory->subcategory_name_en}} @endif
 
-                </h2>
+                </h2></a>
 
 
 {{-- //Get SubSubCategory Data// --}}
@@ -220,7 +223,7 @@ $subsubcategories = App\Models\SubSubCategory::where('subcategory_id',$subcatego
 @foreach($subsubcategories as $subsubcategory)
                 <ul class="links">
 
-                <li><a href="#">
+                <li><a href="{{ url('subsubcategory/product/'.$subsubcategory->id.'/'.$subsubcategory->subsubcategory_slug_en ) }}">
 @if(session()->get('language') == 'hindi') {{$subsubcategory->subsubcategory_name_hin}} @else {{$subsubcategory->subsubcategory_name_en}} @endif
 
               </a></li>
