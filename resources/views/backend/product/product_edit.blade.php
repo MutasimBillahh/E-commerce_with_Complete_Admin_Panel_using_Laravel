@@ -313,7 +313,7 @@
 		<div class="controls">
 
 
-			<input type="text" name="product_size_en" class="form-control" value="Small,Midium,Large" data-role="tagsinput" required value="{{$products->product_size_en}}">
+			<input type="text" name="product_size_en" class="form-control" value="Small,Midium,Large" data-role="tagsinput" value="{{$products->product_size_en}}">
 
 @error('product_size_en')
 
@@ -338,7 +338,7 @@
 	<div class="controls">
 
 
-		<input type="text" name="product_size_hin" class="form-control" value="Small,Midium,Large" data-role="tagsinput" required value="{{$products->product_size_hin}}">
+		<input type="text" name="product_size_hin" class="form-control" value="Small,Midium,Large" data-role="tagsinput" value="{{$products->product_size_hin}}">
 
 @error('product_size_hin')
 

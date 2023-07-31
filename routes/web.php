@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\LanguageController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -197,3 +198,8 @@ Route::get('/subcategory/product/{subcat_id}/{slug}', [IndexController::class, '
 
 // Frontend Sub-SubCategory wise Data
 Route::get('/subsubcategory/product/{subsubcat_id}/{slug}', [IndexController::class, 'SubSubCatWiseProduct']);
+
+
+
+/*Product View Modal WIth AJAX*/
+Route::get('/product/view/modal/{id}', [IndexController::class, 'ProductViewAjax']);

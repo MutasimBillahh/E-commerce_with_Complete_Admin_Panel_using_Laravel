@@ -130,10 +130,11 @@ class IndexController extends Controller
         $size_hin = $product->product_size_hin;
         $product_size_hin = explode(',', $size_hin);
 
-
+        $cat_id = $product->category_id;
+        $relatedProduct = Product::where('category_id',$cat_id)->where('id','!=',$id)->orderBy('id','DESC')->get();
 
         $multiImg = MultiImg::where('product_id',$id)->get();
-        return view('frontend.product.product_details',compact('product','multiImg','product_color_en','product_color_hin','product_size_en','product_size_hin'));
+        return view('frontend.product.product_details',compact('product','multiImg','product_color_en','product_color_hin','product_size_en','product_size_hin','relatedProduct'));
     }
 
 
@@ -161,5 +162,29 @@ class IndexController extends Controller
         return view('frontend.product.sub_subcategory_view',compact('products','categories'));
 
     }
+
+/*Product View With Ajax*/
+    public function ProductViewAjax($id){
+         $product = Product::with('category','brand')->findOrFail($id);
+
+        $color = $product->product_color_en;
+        $product_color_en = explode(',', $color);
+
+        $size = $product->product_size_en;
+        $product_size_en = explode(',', $size);
+
+
+        return response()->json(array(
+                'product' => $product,
+                'color' => $product_color_en,
+                'size' => $product_size_en,
+
+
+
+        ));
+
+    }
+
+
 
 }
