@@ -203,3 +203,12 @@ Route::get('/subsubcategory/product/{subsubcat_id}/{slug}', [IndexController::cl
 
 /*Product View Modal WIth AJAX*/
 Route::get('/product/view/modal/{id}', [IndexController::class, 'ProductViewAjax']);
+
+/*Product Add to Cart Modal WIth AJAX*/
+Route::post('/cart/data/store/{id}', [CartController::class, 'AddToCart']);
+
+/*Get Data From Mini CArT WIth AJAX*/
+Route::get('/product/mini/cart/', [CartController::class, 'AddMiniCart']);
+
+/*Remove Mini CArT WIth AJAX*/
+Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'RemoveMiniCart']);

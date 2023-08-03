@@ -69,6 +69,8 @@ https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.css
 <script src="{{asset('frontend/assets/js/wow.min.js')}}"></script> 
 <script src="{{asset('frontend/assets/js/scripts.js')}}"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script src="
 https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js
 "></script>
@@ -99,7 +101,7 @@ https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"><span id="pname"></span></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeModel">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -126,7 +128,7 @@ https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js
   <li class="list-group-item">Product Code: <strong id="pcode"></strong></li>
   <li class="list-group-item">Category: <strong id="pcategory"></strong></li>
   <li class="list-group-item">Brand: <strong id="pbrand"></strong></li>
-  <li class="list-group-item">Stock: <span class="badge badge-pill badge-success" id="avialable" style="background: green; color: white;"></span> <span class="badge badge-pill badge-success" id="stockout" style="background: red; color: white;"></span></li>
+  <li class="list-group-item">Stock: <span class="badge badge-pill badge-success" id="available" style="background: green; color: white;"></span> <span class="badge badge-pill badge-success" id="stockout" style="background: red; color: white;"></span></li>
 </ul>
 
         </div><!-- // end col md -->
@@ -144,7 +146,7 @@ https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js
 
 
   <div class="form-group" id="sizeArea">
-    <label for="color">CHoose Size</label>
+    <label for="size">Choose Size</label>
     <select class="form-control" id="size" name="size">
       
       
@@ -177,126 +179,180 @@ https://cdn.jsdelivr.net/npm/toastr@2.1.4/build/toastr.min.js
 <!--End Add To Cart Product Modal -->
 
 <script type="text/javascript">
-   $.ajaxSetup({
-      headers:{
-         'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-      }
-   })
-/*Start Product View With Modal*/
-
-function productView(id) {
-   $.ajax({
-      type: 'GET',
-      url: '/product/view/modal/'+id,
-      dataType: 'json',
-      success:function(data) {
-         /*console.log(data)*/
-         $('#pname').text(data.product.product_name_en);
-         $('#price').text(data.product.selling_price);
-         $('#pcode').text(data.product.product_code);
-         $('#pcategory').text(data.product.category.category_name_en);
-         $('#pbrand').text(data.product.brand.brand_name_en);
-         $('#pimage').attr('src','/'+data.product.product_thambnail);
-
-         $('#product_id').val(id);
-         $('#qty').val(1);
-
-         //product price
-
-         if (data.product.discount_price == null) {
-            $('#pprice').text('');
-            $('#oldprice').text('');
-            $('#pprice').text(data.product.selling_price);
-         }else{
-            $('#pprice').text(data.product.discount_price);
-            $('#oldprice').text(data.product.selling_price);
-         }//end product price
-
-
-         //Stock Condition
-
-         if (data.product.product_qty > 0) {
-            $('#avialable').text('');
-            $('#stockout').text('');
-            $('#avialable').text('available');
-            
-         }else{
-
-            $('#avialable').text('');
-            $('#stockout').text('');
-             $('#stockout').text('stockout');
-         }
-         //End Stock Option 
-
-
-
-
-         //color
-         $('select[name="color"]').empty();
-      $.each(data.color,function(key,value) {
-         $('select[name="color"]').append('<option value=" '+value+' "> '+value+'</option>')
-      })
-
-//size
-         $('select[name="size"]').empty();
-      $.each(data.size,function(key,value) {
-         $('select[name="size"]').append('<option value=" '+value+' "> '+value+'</option>')
-
-         if (data.size ==""){
+    $.ajaxSetup({
+        headers:{
+            'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+        }
+    })
+// Start Product View with Modal 
+function productView(id){
+    // alert(id)
+    $.ajax({
+        type: 'GET',
+        url: '/product/view/modal/'+id,
+        dataType:'json',
+        success:function(data){
+            // console.log(data)
+            $('#pname').text(data.product.product_name_en);
+            $('#price').text(data.product.selling_price);
+            $('#pcode').text(data.product.product_code);
+            $('#pcategory').text(data.product.category.category_name_en);
+            $('#pbrand').text(data.product.brand.brand_name_en);
+            $('#pimage').attr('src','/'+data.product.product_thambnail);
+            $('#product_id').val(id);
+            $('#qty').val(1);
+            // Product Price 
+            if (data.product.discount_price == null) {
+                $('#pprice').text('');
+                $('#oldprice').text('');
+                $('#pprice').text(data.product.selling_price);
+            }else{
+                $('#pprice').text(data.product.discount_price);
+                $('#oldprice').text(data.product.selling_price);
+            } // end prodcut price 
+            // Start Stock opiton
+            if (data.product.product_qty > 0) {
+                $('#available').text('');
+                $('#stockout').text('');
+                $('#available').text('available');
+            }else{
+                $('#available').text('');
+                $('#stockout').text('');
+                $('#stockout').text('stockout');
+            } // end Stock Option 
+            // Color
+    $('select[name="color"]').empty();        
+    $.each(data.color,function(key,value){
+        $('select[name="color"]').append('<option value=" '+value+' ">'+value+' </option>')
+    }) // end color
+     // Size
+    $('select[name="size"]').empty();        
+    $.each(data.size,function(key,value){
+        $('select[name="size"]').append('<option value=" '+value+' ">'+value+' </option>')
+        if (data.size == "") {
             $('#sizeArea').hide();
-         }else{
+        }else{
             $('#sizeArea').show();
-         }
-      })//End Size
-
-
-
-
-
-
-         
-      }
-
-   })
+        }
+    }) // end size
+ 
+        }
+    })
+ 
 }
+// Eend Product View with Modal 
+ // Start Add To Cart Product 
+    function addToCart(){
+        var product_name = $('#pname').text();
+        var id = $('#product_id').val();
+        var color = $('#color option:selected').text();
+        var size = $('#size option:selected').text();
+        var quantity = $('#qty').val();
+        $.ajax({
+            type: "POST",
+            dataType: 'json',
+            data:{
+                color:color, size:size, quantity:quantity, product_name:product_name
+            },
+            url: "/cart/data/store/"+id,
+            success:function(data){
+               miniCart()
+                $('#closeModel').click();
 
-/*End Product View With Modal*/
+                // console.log(data)
+                // Start Message 
+                const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      icon: 'success',
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                if ($.isEmptyObject(data.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        title: data.success
+                    })
+                }else{
+                    Toast.fire({
+                        type: 'error',
+                        title: data.error
+                    })
+                }
+                // End Message 
+            }
+        })
+    }
+  
+// End Add To Cart Product 
+</script>
+<script type="text/javascript">
+     function miniCart(){
+        $.ajax({
+            type: 'GET',
+            url: '/product/mini/cart',
+            dataType:'json',
+            success:function(response){
 
-/*Start Add To Cart With Modal*/
-         
-         function addToCart() {
-            var product_name = $('#pname').text();
-            var id = $('#product_id').val();
-            var color = $('#color option:selected').text();
-            var size = $('#size option:selected').text();
-            var qty = $('#qty').val();
+                $('span[id="cartSubTotal"]').text(response.cartTotal);
+                $('#cartQty').text(response.cartQty);
+                var miniCart = ""
+                $.each(response.carts, function(key,value){
+                    miniCart += `<div class="cart-item product-summary">
+                  <div class="row">
+            <div class="col-xs-4">
+              <div class="image"> <a href="detail.html"><img src="/${value.options.image}" alt=""></a> </div>
+            </div>
+            <div class="col-xs-7">
+              <h3 class="name"><a href="index.php?page-detail">${value.name}</a></h3>
+              <div class="price"> ${value.price} * ${value.qty} </div>
+            </div>
+            <div class="col-xs-1 action"> 
+            <button type="submit" id="${value.rowId}" onclick="miniCartRemove(this.id)"><i class="fa fa-trash"></i></button> </div>
+        </div>
+        <!-- /.cart-item -->
+        <div class="clearfix"></div>
+        <hr>`
+                });
+                
+                $('#miniCart').html(miniCart);
+                 }
+        })
+     }
+miniCart();
 
-            $.ajax({
-               type: "POST",
-               dataType: 'json',
-               data:{
-                  color:color, size:size, qty:qty, product_name:pname
-               },
-               url: "/cart/data/store/"+id,
-               success:function(data){
-                  console.log(data)
-               }
-
-
-            })
-
-         }
-
-
-
-
-
-
-
-
-
-/*End Add To Cart With Modal*/
-
+/// mini cart remove Start 
+    function miniCartRemove(rowId){
+        $.ajax({
+            type: 'GET',
+            url: '/minicart/product-remove/'+rowId,
+            dataType:'json',
+            success:function(data){
+            miniCart();
+             // Start Message 
+                const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      icon: 'success',
+                      showConfirmButton: false,
+                      timer: 3000
+                    })
+                if ($.isEmptyObject(data.error)) {
+                    Toast.fire({
+                        type: 'success',
+                        title: data.success
+                    })
+                }else{
+                    Toast.fire({
+                        type: 'error',
+                        title: data.error
+                    })
+                }
+                // End Message 
+            }
+        });
+    }
+ //  end mini cart remove 
 
 
 </script>
