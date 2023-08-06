@@ -7,9 +7,11 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
-use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\LanguageController;
+use App\Http\Controllers\User\CartPageController;
+use App\Http\Controllers\User\WishlistController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -212,3 +214,36 @@ Route::get('/product/mini/cart/', [CartController::class, 'AddMiniCart']);
 
 /*Remove Mini CArT WIth AJAX*/
 Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
+
+
+// Add to Wishlist
+Route::post('/add-to-wishlist/{product_id}', [CartController::class, 'AddToWishlist']);
+
+
+
+
+
+Route::group(['prefix' =>'user','middleware' =>['user','auth'],'namespace'=>'User'],function(){
+
+
+
+/*Get WishList Page */
+Route::get('/wishlist', [WishlistController::class, 'ViewWishlist'])->name('wishlist');
+
+
+
+Route::get('/get-wishlist-product', [WishlistController::class, 'GetWishlistProduct']);
+
+Route::get('/wishlist-remove/{id}', [WishlistController::class, 'RemoveWishlistProduct']);
+
+/*Get my Cart Page */
+Route::get('/mycart', [CartPageController::class, 'MyCart'])->name('mycart');
+
+Route::get('/get-cart-product', [CartPageController::class, 'GetCartProduct']);
+
+
+
+
+
+
+});
