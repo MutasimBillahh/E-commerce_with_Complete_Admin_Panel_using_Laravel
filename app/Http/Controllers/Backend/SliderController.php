@@ -20,7 +20,7 @@ class SliderController extends Controller
     public function SliderStore(Request $request){
 
         $request->validate([
-            
+             //checck for uodate in git....................
             'slider_img' => 'required'
         ]);
 
