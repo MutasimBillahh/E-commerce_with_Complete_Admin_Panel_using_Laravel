@@ -18,6 +18,7 @@ class AdminProfileController extends Controller
 
     public function AdminProfileEdit(){
          $editData = Admin::find(1);
+               //checck for uodate in git....................
         return view('admin.admin_profile_edit', compact('editData'));
 
 
@@ -28,6 +29,7 @@ class AdminProfileController extends Controller
         $data = Admin::find(1);
         $data->name = $request->name;
         $data->email = $request->email;
+              //checck for uodate in git....................
        
         if ($request->file('profile_photo_path')) {
             $file = $request->file('profile_photo_path');
