@@ -12,7 +12,7 @@ class SliderController extends Controller
 {
     public function SliderView(){
         $sliders = Slider::latest()->get();
-
+ //checck for uodate in git....................
         return view('backend.slider.slider_view',compact('sliders'));
     }
 
