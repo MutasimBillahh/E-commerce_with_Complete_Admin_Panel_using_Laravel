@@ -53,6 +53,7 @@ class AdminProfileController extends Controller
 
 
     public function AdminChangePassword(){
+              //checck for uodate in git....................
 
         return view('admin.admin_change_password');
     }
