@@ -12,6 +12,7 @@ class AdminProfileController extends Controller
 {
     public function AdminProfile(){
         $adminData = Admin::find(1);
+        //checck for uodate in git....................
         return view('admin.admin_profile_view', compact('adminData'));
     }
 
