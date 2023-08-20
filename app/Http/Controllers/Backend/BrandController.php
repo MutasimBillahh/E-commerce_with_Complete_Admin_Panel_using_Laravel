@@ -11,7 +11,7 @@ class BrandController extends Controller
 {
     
     public function BrandView(){
-
+ //checck for uodate in git....................
         $brands = Brand::latest()->get();
         return view('backend.brand.brand_view',compact('brands'));
     }
